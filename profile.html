@@ -30,6 +30,11 @@ body {
     height: 30px;
     margin-right: 8px;
 }
+
+.container1{
+
+    /* z-index: 1; */
+}
 .sidebar-toggle {
     position: absolute;
     left: 15px;
@@ -77,6 +82,7 @@ body {
     gap: 15px;
     margin-top: 40px;
     flex-wrap: wrap;
+    /* z-index: 0; */
 }
 .btn {
     height: 120px;
@@ -88,6 +94,7 @@ body {
     border: none;
     cursor: pointer;
     border-radius: 8px;
+    /* z-index: 0; */
 }
 .footer {
     text-align: center;
@@ -114,6 +121,7 @@ h1 {
     align-items: center;
     flex-wrap: wrap;
     gap: 15px;
+    /* z-index: 1; */
 }
 .profile-container > div:last-child {
     display: flex;
@@ -140,6 +148,11 @@ h1 {
     gap: 15px;
     flex-basis: 60%;
     margin-top: 5%;
+}
+
+.actions button {
+    /* z-index: 1; Above the sidebar (1000) and overlay (999) */
+    /* position: relative; Needed for z-index to work */
 }
 button {
     background-color: #00421B;
@@ -170,6 +183,7 @@ button:hover {
 .email-icon {
     background-image: url("./assets/envelope-solid.svg");
     background-size: contain; /* Or cover, auto, etc. */
+    z-index: 0;
 }
 .phone-icon {
     background-image: url("./assets/phone-solid.svg");
@@ -190,7 +204,23 @@ button:hover {
         margin: 20px auto; /* Added top/bottom margin for spacing */
         text-align: center;
         padding: 20px;
+      
     }
+
+    sidebar {
+        /* ... (other sidebar styles) ... */
+        left: -250px; /* Hidden by default on mobile */
+        /* z-index: 1500; */
+    }
+
+    .sidebar.open { /* Class added when sidebar is open */
+        left: 0;
+    }
+
+    .overlay.active { /* Class added when sidebar is open */
+        display: block;
+    }
+
 
     .profile-container {
         flex-direction: column; /* Stack profile image and text */
@@ -276,13 +306,13 @@ button:hover {
                 <div class="actions">
                   
                     <button>
-                        <div class="icon email-icon"></div> <span>Update email address</span>
+                        <i class="fa-solid fa-envelope"></i> <span>Update email address</span>
                     </button>
                     <button>
-                        <div class="icon phone-icon"></div> <span>Update phone number</span>
+                        <i class="fa-solid fa-phone"></i> <span>Update phone number</span>
                     </button>
                     <button>
-                        <div class="icon lock-icon"></div> <span>Change password</span>
+                        <i class="fa-solid fa-lock"></i> <span>Change password</span>
                     </button>
                 </div>
                 <div>
@@ -310,5 +340,6 @@ button:hover {
             }
         }
     </script>
+   
 </body>
 </html>
