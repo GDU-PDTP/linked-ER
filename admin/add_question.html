@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Question</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .header {
+            background-color: white;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 4px solid #005b2b;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .header img {
+            height: 50px;
+        }
+
+        .menu-icon img {
+            height: 24px;
+            cursor: pointer;
+        }
+
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 450px;
+            margin-top: 80px; /* Adjusted to avoid overlapping with the fixed header */
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 22px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #005b2b;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 6px;
+            font-size: 18px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #003d1a;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+
+            input, button {
+                font-size: 16px;
+                padding: 10px;
+            }
+
+            .header img {
+                height: 40px;
+            }
+
+            .menu-icon img {
+                height: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="menu-icon">
+            <img src="https://img.icons8.com/ios/50/000000/menu--v1.png" alt="Menu Icon" onclick="menuClicked()">
+        </div>
+        <img src="https://netstorage-tuko.akamaized.net/images/3712dc39662d8c89.jpg?imwidth=720" alt="NCCG Logo" class="logo-img">
+        <div></div>
+    </div>
+
+    <div class="container">
+        <h2>Add a New Question</h2>
+        <form id="questionForm">
+            <label for="question">Question:</label>
+            <input type="text" id="question" placeholder="Enter your question" required>
+
+            <label for="marks">Marks:</label>
+            <input type="number" id="marks" min="1" placeholder="Enter marks" required>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        function menuClicked() {
+            alert("Menu icon clicked!");
+        }
+
+        document.getElementById("questionForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const question = document.getElementById("question").value;
+            const marks = document.getElementById("marks").value;
+
+            if (question.trim() === "" || marks.trim() === "") {
+                alert("Please fill in all fields.");
+                return;
+            }
+
+            // Save to local storage
+            let questions = JSON.parse(localStorage.getItem("questions")) || [];
+            questions.push({ question, marks });
+            localStorage.setItem("questions", JSON.strin
