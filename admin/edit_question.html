@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Question</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header {
+            background-color: white;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 4px solid #005b2b;
+            width: 100%;
+        }
+
+        .header img {
+            height: 50px; /* Matches the size in questiondb.html */
+        }
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .btn {
+            background-color: #005b2b;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="https://netstorage-tuko.akamaized.net/images/3712dc39662d8c89.jpg?imwidth=720" alt="NCCG Logo">
+    </div>
+
+    <div class="container">
+        <h2>Edit Question</h2>
+        <form id="editForm">
+            <label>Question:</label>
+            <input type="text" id="questionInput" required>
+
+            <label>Marks:</label>
+            <input type="number" id="marksInput" required>
+
+            <div class="btn-container">
+                <button type="submit" class="btn">Submit</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        let questionData = JSON.parse(localStorage.getItem("editQuestion"));
+        document.getElementById("questionInput").value = questionData.question;
+        document.getElementById("marksInput").value = questionData.marks;
+
+        document.getElementById("editForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            let index = localStorage.getItem("editIndex");
+            let questions = JSON.parse(localStorage.getItem("questions")) || [];
+            questions[index] = {
+                question: document.getElementById("questionInput").value,
+                marks: document.getElementById("marksInput").value
+            };
+            localStorage.setItem("questions", JSON.stringify(questions));
+            window.location.href = "questiondb.html";
+        });
+    </script>
+</body>
+</html>
