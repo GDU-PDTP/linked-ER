@@ -60,10 +60,6 @@
             font-size: 16px;
         }
 
-        .add-question button i {
-            margin-right: 5px;
-        }
-
         table {
             width: 100%;
             border-collapse: collapse;
@@ -98,6 +94,12 @@
             background-color: red;
         }
 
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+                padding: 10px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -111,7 +113,7 @@
 
     <div class="container">
         <div class="add-question">
-            <button onclick="window.location.href='add_question.html'">Add Question</button>
+            <button onclick="location.href='add_question.html'">Add Question</button>
         </div>
 
         <h2>Questions Database</h2>
@@ -123,40 +125,52 @@
                     <th>Actions</th>
                 </tr>
             </thead>
-            <tbody id="questionList">
-                <!-- Questions will be added here dynamically -->
+            <tbody id="questionsTable">
+                <!-- Questions will be inserted here dynamically -->
             </tbody>
         </table>
     </div>
 
     <script>
-        
+        function menuClicked() {
+            alert("Menu icon clicked!");
+        }
 
-        // Load questions from local storage
-        document.addEventListener("DOMContentLoaded", function () {
-            const questions = JSON.parse(localStorage.getItem("questions")) || [];
-            const tableBody = document.getElementById("questionList");
+        function loadQuestions() {
+            let questions = JSON.parse(localStorage.getItem("questions")) || [];
+            let tableBody = document.getElementById("questionsTable");
+            tableBody.innerHTML = "";
 
-            questions.forEach((q, index) => {
-                const row = document.createElement("tr");
-                row.innerHTML = `
-                    <td>${q.question}</td>
-                    <td>${q.marks}</td>
-                    <td>
-                        <button class="btn btn-edit">Edit</button>
-                        <button class="btn btn-delete" onclick="deleteQuestion(${index})">Delete</button>
-                    </td>
+            questions.forEach((item, index) => {
+                let row = `
+                    <tr>
+                        <td>${item.question}</td>
+                        <td>${item.marks}</td>
+                        <td>
+                            <button class="btn btn-edit" onclick="editQuestion(${index})">Edit</button>
+                            <button class="btn btn-delete" onclick="deleteQuestion(${index})">Delete</button>
+                        </td>
+                    </tr>
                 `;
-                tableBody.appendChild(row);
+                tableBody.innerHTML += row;
             });
-        });
+        }
+
+        function editQuestion(index) {
+            let questions = JSON.parse(localStorage.getItem("questions")) || [];
+            localStorage.setItem("editIndex", index);
+            localStorage.setItem("editQuestion", JSON.stringify(questions[index]));
+            window.location.href = "edit_question.html";
+        }
 
         function deleteQuestion(index) {
             let questions = JSON.parse(localStorage.getItem("questions")) || [];
             questions.splice(index, 1);
             localStorage.setItem("questions", JSON.stringify(questions));
-            location.reload();
+            loadQuestions();
         }
+
+        window.onload = loadQuestions;
     </script>
 </body>
 </html>
